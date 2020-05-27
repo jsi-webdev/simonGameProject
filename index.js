@@ -5,7 +5,9 @@ var userClickedPattern = [];
 $(".btn").click(function () {
   var userChosenColor = $(this).attr("id");
   userClickedPattern.push(userChosenColor);
-  console.log(userClickedPattern);
+  var soundFileName = "sounds/" + userChosenColor + ".mp3";
+  animatePress(userChosenColor);
+  playSound(userClickedPattern);
 });
 
 function nextSequence() {
@@ -15,6 +17,17 @@ function nextSequence() {
   $("#" + randomChosenColor)
     .fadeOut(100)
     .fadeIn(100);
-  var audio = new Audio("sound/" + randomChosenColor + ".mp3");
+  playSound(randomChosenColor);
+}
+
+function playSound(currentColor) {
+  var audio = new Audio("sounds/" + currentColor + ".mp3");
   audio.play();
+}
+
+function animatePress(currentColor) {
+  $("." + currentColor).addClass("pressed");
+  setTimeout(function () {
+    $("." + currentColor).removeClass("pressed");
+  }, 100);
 }
