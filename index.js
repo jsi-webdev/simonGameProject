@@ -36,15 +36,26 @@ function nextSequence() {
 
 function checkAnswer(currentLevel) {
   if (gamePattern[currentLevel] === userClickedPattern[currentLevel]) {
-    console.log("success");
     if (currentLevel === gamePattern.length - 1) {
       setTimeout(function () {
         nextSequence();
       }, 1000);
     }
   } else if (gamePattern[currentLevel] !== userClickedPattern[currentLevel]) {
-    console.log("fail");
+    playSound("wrong");
+    $("body").addClass("game-over");
+    setTimeout(function () {
+      $("body").removeClass("game-over");
+    }, 200);
+    $("h1").text("Game Over, Press Any Key to Restart");
+    startOver();
   }
+}
+
+function startOver() {
+  gamePattern = [];
+  level = 0;
+  isStarted = false;
 }
 
 function playSound(currentColor) {
